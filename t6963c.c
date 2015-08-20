@@ -171,6 +171,9 @@ void t6963c_update_terminal(Terminal* term) {
                 row++;
         }
     }
+    t6963c_stopAutoWrite();
+    t6963c_set_cursor_address(row, column);
+    t6963c_startAutoWrite();
     while (row != t6963c_rows) {
         t6963c_autoWriteChar(' ');
         column = (column + 1) % t6963c_columns;
@@ -178,6 +181,5 @@ void t6963c_update_terminal(Terminal* term) {
             row++;
     }
     t6963c_stopAutoWrite();
-    t6963c_set_cursor_address(row, column);
 }
 
