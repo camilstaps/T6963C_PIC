@@ -101,9 +101,8 @@ static unsigned int terminal_lines_needed(unsigned char* string, unsigned int ro
 
 static void terminal_discard_first_line(unsigned char* string, unsigned int row_length) {
     unsigned int i;
-    unsigned char* s = string;
-    for (i = 0; s[i] && s[i] != '\n' && i < row_length; i++);
-    strcpy(string, s + i);
+    for (i = 0; string[i] && string[i] != '\n' && i < row_length - 1; i++);
+    strcpy(string, string + i + 1);
 }
 
 const Terminal_namespace terminal = {
