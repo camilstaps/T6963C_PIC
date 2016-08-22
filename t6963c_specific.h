@@ -29,18 +29,18 @@
 
 #include <p32xxxx.h>
 
-#define t6963c_rst LATBbits.LATB12      // RESET line
-#define t6963c_cd LATBbits.LATB8        // C/D line
-#define t6963c_ce LATBbits.LATB9        // CE line
-#define t6963c_rd LATBbits.LATB10       // RD line
-#define t6963c_wr LATBbits.LATB11       // WR line
-#define t6963c_t_rst TRISBbits.TRISB12  // TRIS bit of RESET pin
-#define t6963c_t_cd TRISBbits.TRISB8    // TRIS bit of C/D pin
-#define t6963c_t_ce TRISBbits.TRISB9    // TRIS bit of CE pin
-#define t6963c_t_rd TRISBbits.TRISB10   // TRIS bit of RD pin
-#define t6963c_t_wr TRISBbits.TRISB11   // TRIS bit of WR pin
-#define t6963c_data LATB                // Data port (the lowest 8 bits are assumed)
-#define t6963c_t_data TRISB             // TRIS register of data port
+#define t6963c_rst(x)    LATBbits.LATB12   = x // RESET line
+#define t6963c_cd(x)     LATBbits.LATB8    = x // C/D line
+#define t6963c_ce(x)     LATBbits.LATB9    = x // CE line
+#define t6963c_rd(x)     LATBbits.LATB10   = x // RD line
+#define t6963c_wr(x)     LATBbits.LATB11   = x // WR line
+#define t6963c_t_rst(x)  TRISBbits.TRISB12 = x // TRIS bit of RESET pin
+#define t6963c_t_cd(x)   TRISBbits.TRISB8  = x // TRIS bit of C/D pin
+#define t6963c_t_ce(x)   TRISBbits.TRISB9  = x // TRIS bit of CE pin
+#define t6963c_t_rd(x)   TRISBbits.TRISB10 = x // TRIS bit of RD pin
+#define t6963c_t_wr(x)   TRISBbits.TRISB11 = x // TRIS bit of WR pin
+#define t6963c_data(x)   LATB  = (LATB  & 0xff00) | x; // Data port (lowest 8 bits)
+#define t6963c_t_data(x) TRISB = (TRISB & 0xff00) | x; // TRIS register of data port
     
 #define t6963c_rows 16                  // Number of rows of the LCD
 #define t6963c_columns 40               // Number of columns of the LCD

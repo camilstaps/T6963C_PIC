@@ -77,10 +77,10 @@ extern inline void t6963c_t_cd(unsigned);
 extern inline void t6963c_t_ce(unsigned);
 extern inline void t6963c_t_rd(unsigned);
 extern inline void t6963c_t_wr(unsigned);
-#endif
 
-extern volatile unsigned int t6963c_data;
-extern volatile unsigned int t6963c_t_data;
+extern inline void t6963c_data(unsigned int);
+extern inline void t6963c_t_data(unsigned int);
+#endif
 
 #ifndef t6963c_rows
 #define t6963c_rows 16

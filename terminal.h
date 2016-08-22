@@ -40,9 +40,9 @@ extern "C" {
 #endif
 
 typedef struct Terminal {
-    unsigned char* content;             // actual content
-    unsigned int length;                // length of the allocated memory block
-    void (*update)(struct Terminal*);   // update callback
+    char* content;                    // actual content
+    unsigned int length;              // length of the allocated memory block
+    void (*update)(struct Terminal*); // update callback
 } Terminal;
 
 typedef struct {
@@ -61,14 +61,14 @@ typedef struct {
      * A larger block of memory is allocated if needed.
      * @return 0 if allocating more memory failed, 1 otherwise
      */
-    unsigned (*const append)(Terminal*, unsigned char*);
+    unsigned (*const append)(Terminal*, char*);
     
     /**
      * Append a character to a Terminal's data, and call the update callback
      * A larger block of memory is allocated if needed.
      * @return 0 if allocating more memory failed, 1 otherwise
      */
-    unsigned (*const appendChar)(Terminal*, unsigned char);
+    unsigned (*const appendChar)(Terminal*, char);
     
     /**
      * Discard the last n characters of a Terminal's data, and call the update
@@ -81,14 +81,14 @@ typedef struct {
      * n columns, if words wrap occur at any place in a word and \n gives a new
      * line.
      */
-    unsigned int (*const lines_needed)(unsigned char*, unsigned int row_length);
+    unsigned int (*const lines_needed)(char*, unsigned int row_length);
     
     /**
      * Discard the first line of a string, where a line has n columns - that is,
      * discard until the first \n or until n characters have passed, whichever
      * occurs first.
      */
-    void (*const discard_first_line)(unsigned char*, unsigned int row_length);
+    void (*const discard_first_line)(char*, unsigned int row_length);
 } Terminal_namespace;
 
 extern const Terminal_namespace terminal;

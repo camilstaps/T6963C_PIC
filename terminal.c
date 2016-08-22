@@ -22,7 +22,7 @@
 #include <string.h>
 
 static Terminal* terminal_construct(unsigned int length) {
-    unsigned char* content = calloc(1, length + 1);
+    char* content = calloc(1, length + 1);
     Terminal* terminal = calloc(1, sizeof(Terminal));
     if (content == NULL || terminal == NULL)
         return NULL;
@@ -39,10 +39,10 @@ static void terminal_free(Terminal* terminal) {
     free(terminal);
 }
 
-static unsigned terminal_append(Terminal* terminal, unsigned char* string) {
+static unsigned terminal_append(Terminal* terminal, char* string) {
     if (strlen(terminal->content) + strlen(string) > terminal->length) {
         unsigned int length = terminal->length + strlen(string) * 2;
-        unsigned char* content = calloc(1, length + 1);
+        char* content = calloc(1, length + 1);
         if (content == NULL)
             return 0;
         strcpy(content, terminal->content);
@@ -56,10 +56,10 @@ static unsigned terminal_append(Terminal* terminal, unsigned char* string) {
     return 1;
 }
 
-static unsigned terminal_appendChar(Terminal* terminal, unsigned char character) {
+static unsigned terminal_appendChar(Terminal* terminal, char character) {
     if (strlen(terminal->content) + 1 > terminal->length) {
         unsigned int length = terminal->length * 2;
-        unsigned char* content = calloc(1, length + 1);
+        char* content = calloc(1, length + 1);
         if (content == NULL)
             return 0;
         strcpy(content, terminal->content);
@@ -76,13 +76,16 @@ static unsigned terminal_appendChar(Terminal* terminal, unsigned char character)
 } 
 
 static void terminal_discard(Terminal* terminal, unsigned int n) {
-    n = min(strlen(terminal->content), n);
+	unsigned int len;
+	len = strlen(terminal->content);
+	if (len < n)
+		n = len;
     *(terminal->content + strlen(terminal->content) - n) = NULL;
     if (terminal->update)
         terminal->update(terminal);
 }
 
-static unsigned int terminal_lines_needed(unsigned char* string, unsigned int row_length) {
+static unsigned int terminal_lines_needed(char* string, unsigned int row_length) {
     unsigned int i;
     unsigned int lines = 1, current_line = 0;
     for (i=0; string[i]; i++) {
@@ -99,7 +102,7 @@ static unsigned int terminal_lines_needed(unsigned char* string, unsigned int ro
     return lines;
 }
 
-static void terminal_discard_first_line(unsigned char* string, unsigned int row_length) {
+static void terminal_discard_first_line(char* string, unsigned int row_length) {
     unsigned int i;
     for (i = 0; string[i] && string[i] != '\n' && i < row_length - 1; i++);
     strcpy(string, string + i + 1);

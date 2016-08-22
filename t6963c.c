@@ -28,8 +28,7 @@ inline void delay_ns(unsigned short ns) {
 void t6963c_writeByte(unsigned cd, unsigned char byte) {
     t6963c_cd(cd);
     t6963c_wr(0);
-    t6963c_data &= 0xff00;
-    t6963c_data |= 0x00ff & byte;
+	t6963c_data(byte);
     t6963c_ce(0);
     delay_ns(200);
     t6963c_ce(1);
@@ -65,8 +64,7 @@ void t6963c_stopAutoWrite(void) {
 void t6963c_autoWrite(unsigned char byte) {
     t6963c_cd(0);
     t6963c_wr(0);
-    t6963c_data &= 0xff00;
-    t6963c_data |= 0x00ff & byte;
+    t6963c_data(byte);
     t6963c_ce(0);
     delay_ns(200);
     t6963c_ce(1);
@@ -108,7 +106,7 @@ void t6963c_init(void) {
     t6963c_t_ce(0);
     t6963c_t_rd(0);
     t6963c_t_wr(0);
-    t6963c_t_data &= 0xff00;
+    t6963c_t_data(0x00);
     
     t6963c_wr(1);
     t6963c_rd(1);
