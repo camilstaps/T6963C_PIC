@@ -26,14 +26,14 @@ inline void delay_ns(unsigned short ns) {
 }
 
 void t6963c_writeByte(unsigned cd, unsigned char byte) {
-    t6963c_cd = cd;
-    t6963c_wr = 0;
+    t6963c_cd(cd);
+    t6963c_wr(0);
     t6963c_data &= 0xff00;
     t6963c_data |= 0x00ff & byte;
-    t6963c_ce = 0;
+    t6963c_ce(0);
     delay_ns(200);
-    t6963c_ce = 1;
-    t6963c_wr = 1;
+    t6963c_ce(1);
+    t6963c_wr(1);
     delay_ns(200);
 }
 
@@ -63,14 +63,14 @@ void t6963c_stopAutoWrite(void) {
 }
 
 void t6963c_autoWrite(unsigned char byte) {
-    t6963c_cd = 0;
-    t6963c_wr = 0;
+    t6963c_cd(0);
+    t6963c_wr(0);
     t6963c_data &= 0xff00;
     t6963c_data |= 0x00ff & byte;
-    t6963c_ce = 0;
+    t6963c_ce(0);
     delay_ns(200);
-    t6963c_ce = 1;
-    t6963c_wr = 1;
+    t6963c_ce(1);
+    t6963c_wr(1);
     delay_ns(6000);
 }
 
@@ -103,22 +103,22 @@ void t6963c_clear(void) {
 void t6963c_init(void) {
     unsigned short i;
     
-    t6963c_t_rst = 0;
-    t6963c_t_cd = 0;
-    t6963c_t_ce = 0;
-    t6963c_t_rd = 0;
-    t6963c_t_wr = 0;
+    t6963c_t_rst(0);
+    t6963c_t_cd(0);
+    t6963c_t_ce(0);
+    t6963c_t_rd(0);
+    t6963c_t_wr(0);
     t6963c_t_data &= 0xff00;
     
-    t6963c_wr = 1;
-    t6963c_rd = 1;
-    t6963c_cd = 1;
-    t6963c_ce = 1;
+    t6963c_wr(1);
+    t6963c_rd(1);
+    t6963c_cd(1);
+    t6963c_ce(1);
     
-    t6963c_rst = 0;
+    t6963c_rst(0);
     for (i = 0; i < 10; i++)
         delay_ns(60000);
-    t6963c_rst = 1;
+    t6963c_rst(1);
     
     t6963c_writeCmd2(0x40, 0x00, 0x00);             // text home address
     t6963c_writeCmd2(0x41, t6963c_columns, 0x00);   // text area set
@@ -161,13 +161,13 @@ void t6963c_update_terminal(Terminal* term) {
     for (i=0; term->content[i]; i++) {
         if (term->content[i] == '\n') {
             t6963c_autoWriteChar(' ');
-            while (column = (column + 1) % t6963c_columns)
+            while ((column = (column + 1) % t6963c_columns))
                 t6963c_autoWriteChar(' ');
             row++;
         } else {
             t6963c_autoWriteChar(term->content[i]);
             column = (column + 1) % t6963c_columns;
-            if (column == NULL)
+            if (column == 0)
                 row++;
         }
     }
@@ -177,7 +177,7 @@ void t6963c_update_terminal(Terminal* term) {
     while (row != t6963c_rows) {
         t6963c_autoWriteChar(' ');
         column = (column + 1) % t6963c_columns;
-        if (column == NULL)
+        if (column == 0)
             row++;
     }
     t6963c_stopAutoWrite();

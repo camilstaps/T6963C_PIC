@@ -31,8 +31,8 @@
  * project-specific code.
  */
 
-#include "t6963c_specific.h"
 #include "terminal.h"
+#include <t6963c_specific.h>
 
 #ifndef T6963C_H
 #define	T6963C_H
@@ -65,6 +65,29 @@ extern inline unsigned short t6963c_getTimeNs(void);
  * Stop the timer for the delay functions
  */
 extern inline void t6963c_stopTimer(void);
+
+#ifndef t6963c_rst
+extern inline void t6963c_rst(unsigned);
+extern inline void t6963c_cd(unsigned);
+extern inline void t6963c_ce(unsigned);
+extern inline void t6963c_rd(unsigned);
+extern inline void t6963c_wr(unsigned);
+extern inline void t6963c_t_rst(unsigned);
+extern inline void t6963c_t_cd(unsigned);
+extern inline void t6963c_t_ce(unsigned);
+extern inline void t6963c_t_rd(unsigned);
+extern inline void t6963c_t_wr(unsigned);
+#endif
+
+extern volatile unsigned int t6963c_data;
+extern volatile unsigned int t6963c_t_data;
+
+#ifndef t6963c_rows
+#define t6963c_rows 16
+#endif
+#ifndef t6963c_columns
+#define t6963c_columns 40
+#endif
 
 // Text attribute mode definitions
 #define t6963c_attr_normal 0x00
