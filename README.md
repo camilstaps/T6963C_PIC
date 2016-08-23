@@ -27,7 +27,7 @@ Before anything else, you should call `t6963c_init()`, which will set the LCD in
 After this, you will mainly need the following functions:
 
  * `t6963c_clear()` - clear the LCD and set the cursor and he character address to the top left
- * `t6963c_writeString(unsigned char* string)` - write a string to the LCD
+ * `t6963c_writeString(char* string)` - write a string to the LCD
  * `t6963c_set_address(unsigned char row, unsigned char column)` - set the character address
  * `t6963c_set_cursor_address(unsigned char row, unsigned char column)` - set the cursor address
 
@@ -64,7 +64,7 @@ You can link an update function to a `Terminal` object. This function should hav
 
 From then on, the display will automatically be updated with data in the `Terminal`.
 
-The `Terminal` library contains two useful functions on strings. The first, `terminal.lines_needed(unsigned char*, unsigned int row_length)`, calculates the number of lines needed to display a string on a display with a certain row length. The second, `terminal.discard_first_line(unsigned char*, unsigned int row_length)` discards the first line of a string as if displayed on a display with a certain row length. Both functions take into account both the row length and the new line character `\n`. A usage example may be found in `t6963c_update_terminal()` in `t6963c.c`.
+The `Terminal` library contains two useful functions on strings. The first, `terminal.lines_needed(char*, unsigned int row_length)`, calculates the number of lines needed to display a string on a display with a certain row length. The second, `terminal.discard_first_line(char*, unsigned int row_length)` discards the first line of a string as if displayed on a display with a certain row length. Both functions take into account both the row length and the new line character `\n`. A usage example may be found in `t6963c_update_terminal()` in `t6963c.c`.
 
 See `terminal.h` for more information.
 

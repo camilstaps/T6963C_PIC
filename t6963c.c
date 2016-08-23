@@ -25,7 +25,7 @@ inline void delay_ns(unsigned short ns) {
     t6963c_stopTimer();
 }
 
-void t6963c_writeByte(unsigned cd, unsigned char byte) {
+void t6963c_writeByte(unsigned cd, char byte) {
     t6963c_cd(cd);
     t6963c_wr(0);
 	t6963c_data(byte);
@@ -36,13 +36,13 @@ void t6963c_writeByte(unsigned cd, unsigned char byte) {
     delay_ns(200);
 }
 
-void t6963c_writeCmd1(unsigned char cmd, unsigned char data) {
+void t6963c_writeCmd1(char cmd, char data) {
     t6963c_writeByte(0, data);
     t6963c_writeByte(1, cmd);
     delay_ns(60000);
 }
 
-void t6963c_writeCmd2(unsigned char cmd, unsigned char data1, unsigned char data2) {
+void t6963c_writeCmd2(char cmd, char data1, char data2) {
     t6963c_writeByte(0, data1);
     t6963c_writeByte(0, data2);
     t6963c_writeByte(1, cmd);
@@ -61,7 +61,7 @@ void t6963c_stopAutoWrite(void) {
     delay_ns(60000);
 }
 
-void t6963c_autoWrite(unsigned char byte) {
+void t6963c_autoWrite(char byte) {
     t6963c_cd(0);
     t6963c_wr(0);
     t6963c_data(byte);
@@ -72,11 +72,11 @@ void t6963c_autoWrite(unsigned char byte) {
     delay_ns(6000);
 }
 
-inline void t6963c_autoWriteChar(unsigned char byte) {
+inline void t6963c_autoWriteChar(char byte) {
     t6963c_autoWrite(byte - 0x20);
 }
 
-void t6963c_writeString(unsigned char* string) {
+void t6963c_writeString(char* string) {
     t6963c_startAutoWrite();
     for (;*string;string++)
         t6963c_autoWriteChar(*string);
@@ -132,7 +132,7 @@ void t6963c_init(void) {
     t6963c_set_address(0, 0);
     t6963c_set_cursor_address(0, 0);
     
-    t6963c_initTimer();
+    t6963c_initTimer(); 
 }
 
 void t6963c_set_address(unsigned char row, unsigned char column) {

@@ -102,14 +102,14 @@ extern inline void t6963c_t_data(unsigned int);
  * @param cd whether this is a command (1) or data (0)
  * @param byte the byte to send
  */
-void t6963c_writeByte(unsigned cd, unsigned char byte);
+void t6963c_writeByte(unsigned cd, char byte);
 
 /**
  * Write a command with one data byte to the LCD
  * @param cmd the command byte
  * @param data the data byte
  */
-void t6963c_writeCmd1(unsigned char cmd, unsigned char data);
+void t6963c_writeCmd1(char cmd, char data);
 
 /**
  * Write a command with two data bytes to the LCD
@@ -117,7 +117,7 @@ void t6963c_writeCmd1(unsigned char cmd, unsigned char data);
  * @param data1 the first data byte
  * @param data2 the second data byte
  */
-void t6963c_writeCmd2(unsigned char cmd, unsigned char data1, unsigned char data2);
+void t6963c_writeCmd2(char cmd, char data1, char data2);
 
 /**
  * Start "auto write mode". After this, characters may be written with 
@@ -137,20 +137,20 @@ void t6963c_stopAutoWrite(void);
  * @param byte the byte
  * @see t6963c_startAutoWrite
  */
-void t6963c_autoWrite(unsigned char byte);
+void t6963c_autoWrite(char byte);
 
 /**
  * Auto write an ASCII byte to the LCD
  * @param character the character
  * @see t6963c_startAutoWrite
  */
-inline void t6963c_autoWriteChar(unsigned char character);
+inline void t6963c_autoWriteChar(char character);
 
 /**
  * Write an ASCII string to the LCD
  * @param string
  */
-void t6963c_writeString(unsigned char* string);
+void t6963c_writeString(char* string);
 
 /**
  * Clear the LCD, and set the data address to the top left
