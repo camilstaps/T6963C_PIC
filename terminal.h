@@ -62,6 +62,13 @@ typedef struct {
      * @return 0 if allocating more memory failed, 1 otherwise
      */
     unsigned (*const append)(Terminal*, char*);
+
+    /**
+	 * Append a part of a string to a Terminal's data, and call the update
+	 * callback A larger block of memory is allocated if needed.
+     * @return 0 if allocating more memory failed, 1 otherwise
+     */
+    unsigned (*const append_n)(Terminal*, char*, unsigned short);
     
     /**
      * Append a character to a Terminal's data, and call the update callback

@@ -39,9 +39,10 @@ static void terminal_free(Terminal* terminal) {
     free(terminal);
 }
 
-static unsigned terminal_append(Terminal* terminal, char* string) {
-    if (strlen(terminal->content) + strlen(string) > terminal->length) {
-        unsigned int length = terminal->length + strlen(string) * 2;
+static unsigned terminal_append_n(
+		Terminal* terminal, char* string, unsigned short n) {
+    if (strlen(terminal->content) + n > terminal->length) {
+        unsigned int length = terminal->length + n * 2;
         char* content = calloc(1, length + 1);
         if (content == NULL)
             return 0;
@@ -50,10 +51,14 @@ static unsigned terminal_append(Terminal* terminal, char* string) {
         terminal->content = content;
         terminal->length = length;
     }
-    strcat(terminal->content, string);
+    strncat(terminal->content, string, n);
     if (terminal->update)
         terminal->update(terminal);
     return 1;
+}
+
+static unsigned terminal_append(Terminal* terminal, char* string) {
+	return terminal_append_n(terminal, string, strlen(string));
 }
 
 static unsigned terminal_appendChar(Terminal* terminal, char character) {
@@ -112,6 +117,7 @@ const Terminal_namespace terminal = {
     terminal_construct,
     terminal_free,
     terminal_append,
+    terminal_append_n,
     terminal_appendChar,
     terminal_discard,
     terminal_lines_needed,
