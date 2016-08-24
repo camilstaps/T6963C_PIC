@@ -43,12 +43,9 @@ static unsigned terminal_append_n(
 		Terminal* terminal, char* string, unsigned short n) {
     if (strlen(terminal->content) + n > terminal->length) {
         unsigned int length = terminal->length + n * 2;
-        char* content = calloc(1, length + 1);
-        if (content == NULL)
+        terminal->content = realloc(terminal->content, length + 1);
+        if (terminal->content == NULL)
             return 0;
-        strcpy(content, terminal->content);
-        free(terminal->content);
-        terminal->content = content;
         terminal->length = length;
     }
     strncat(terminal->content, string, n);
@@ -64,12 +61,9 @@ static unsigned terminal_append(Terminal* terminal, char* string) {
 static unsigned terminal_appendChar(Terminal* terminal, char character) {
     if (strlen(terminal->content) + 1 > terminal->length) {
         unsigned int length = terminal->length * 2;
-        char* content = calloc(1, length + 1);
-        if (content == NULL)
+        terminal->content = realloc(terminal->content, length + 1);
+        if (terminal->content == NULL)
             return 0;
-        strcpy(content, terminal->content);
-        free(terminal->content);
-        terminal->content = content;
         terminal->length = length;
     }
     unsigned int length = strlen(terminal->content);
